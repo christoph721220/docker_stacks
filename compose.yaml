@@ -1,0 +1,22 @@
+services:
+  iobroker:
+    network_mode: host
+    restart: always
+    image: buanet/iobroker
+    container_name: iobroker
+    hostname: iobroker
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+      - "8084:8084"
+    volumes:
+      - vol:/opt/iobroker
+    privileged: true 
+volumes:
+  vol:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /home/docker/iobroker2
+      o: bind
