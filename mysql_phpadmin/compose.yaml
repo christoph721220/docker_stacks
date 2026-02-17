@@ -1,0 +1,36 @@
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    container_name: mysql
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER:  christoph 
+      MYSQL_PASSWORD: diana1966
+      MYSQL_DATABASE: test
+      TZ: Europe/Berlin
+    volumes:
+      - vol:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8181:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    depends_on:
+      - mysql
+volumes:
+  vol:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /home/docker/mysql
+      o: bind

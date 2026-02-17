@@ -1,0 +1,28 @@
+
+services:
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    restart: always
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - vol:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8888:8080
+    environment:
+      - TZ=Europe/Berlin
+    devices:
+      - /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20220811112558-if00:/dev/ttyACM0
+    networks:
+      - zigbee2mqtt
+networks:
+    zigbee2mqtt:
+      name: zigbee2mqtt
+      driver: bridge
+volumes:
+  vol:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /home/docker/zigbee2mqtt
+      o: bind

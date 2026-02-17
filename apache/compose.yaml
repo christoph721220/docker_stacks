@@ -1,1 +1,22 @@
-
+services:
+  apache:
+    image: httpd:latest
+    container_name: apache
+    restart: always
+    ports:
+    - '80:80'
+    volumes:
+    - vol:/usr/local/apache2/htdocs
+    networks:
+    - apache
+networks:
+  apache:
+    name: apache
+    driver: bridge
+volumes:
+  vol:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /home/docker/www
+      o: bind

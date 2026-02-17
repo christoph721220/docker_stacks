@@ -1,0 +1,18 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    network_mode: host 
+    container_name: homeassistant
+    restart: always
+    volumes:
+      - vol:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true 
+volumes:
+  vol:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /home/docker/homeassistant/config
+      o: bind

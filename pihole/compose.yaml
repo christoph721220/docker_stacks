@@ -1,0 +1,24 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      # Default HTTP Port
+      - "8080:80/tcp"
+      # Default HTTPs Port. FTL will generate a self-signed certificate
+      - "443:443/tcp"
+      # Uncomment the below if using Pi-hole as your DHCP Server
+      #- "67:67/udp"
+    environment:
+      TZ: 'Europe/Berlin'
+      FTLCONF_webserver_api_password: 'diana1966'
+      FTLCONF_dns_listeningMode: 'ALL'
+    volumes:
+      - /home/docker/pihole/etc-pihole:/etc/pihole
+      - /home/docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
