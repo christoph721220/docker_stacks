@@ -18,5 +18,5 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /home/docker/iobroker2
+      device: /home/docker/iobroker
       o: bind
